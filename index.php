@@ -31,6 +31,26 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frm_addstudent")) {
+  $insertSQL = sprintf("INSERT INTO student (student_fullname) VALUES (%s)",
+                       GetSQLValueString($_POST['txt_fullname'], "text"));
+
+  mysql_select_db($database_harry, $harry);
+  $Result1 = mysql_query($insertSQL, $harry) or die(mysql_error());
+
+  $insertGoTo = "index.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $insertGoTo));
+}
+
 mysql_select_db($database_harry, $harry);
 $query_house = "SELECT * FROM house ORDER BY house_id ASC";
 $house = mysql_query($query_house, $harry) or die(mysql_error());
@@ -67,17 +87,18 @@ $totalRows_house = mysql_num_rows($house);
                     <!--
                 <img alt="Bootstrap Image Preview" src="img/banner2.png" class="rounded" />
 -->
-                    <form method="post" enctype="multipart/form-data" id="frm_addstudent" role="form">
+                    <form action="<?php echo $editFormAction; ?>" name="frm_addstudent" method="POST" enctype="multipart/form-data" id="frm_addstudent" role="form">
                         <div class="form-group">
 
                             <label for="exampleInputEmail1">
                                 ชื่อ - นามสกุล นักเรียน
                             </label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="txt_fullname" />
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="txt_fullname" required />
                         </div>
                         <button type="submit" class="btn btn-primary">
                             เพิ่มนักเรียน
                         </button>
+                        <input type="hidden" name="MM_insert" value="frm_addstudent">
                     </form>
                 </div>
             </div>
