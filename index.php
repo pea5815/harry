@@ -79,7 +79,7 @@ $totalRows_house = mysql_num_rows($house);
             <p>
               <?php echo $row_house['house_detail']; ?></p>
             <p>
-              <a class="btn" href="#">View details »</a>
+              <a class="btn" href="house_view.php?houseid=<?php echo $row_house['house_id'];?>">View details »</a>
               </p>
           </div>
           <?php } while ($row_house = mysql_fetch_assoc($house)); ?>
