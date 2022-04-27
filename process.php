@@ -1,3 +1,46 @@
+<?php require_once('Connections/harry.php'); ?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+$colname_student = "-1";
+if (isset($_GET['txt_fullname'])) {
+  $colname_student = $_GET['txt_fullname'];
+}
+mysql_select_db($database_harry, $harry);
+$query_student = sprintf("SELECT * FROM student WHERE student_fullname = %s", GetSQLValueString($colname_student, "text"));
+$student = mysql_query($query_student, $harry) or die(mysql_error());
+$row_student = mysql_fetch_assoc($student);
+$totalRows_student = mysql_num_rows($student);
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,10 +64,8 @@
 		<div class="col-md-12">
 			<div class="jumbotron">
 				<h2>
-					Hello, world!
-				</h2>
-				<p>
-					This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+				Hello, <?php echo $row_student['student_fullname']; ?> </h2>
+				<p>ยินดีด้วย คุณถูกเลือกให้อยู่ในบ้าน .
 				</p>
 				<p>
 					<a class="btn btn-primary btn-large" href="#">Learn more</a>
@@ -74,3 +115,6 @@
     <script src="js/scripts.js"></script>
   </body>
 </html>
+<?php
+mysql_free_result($student);
+?>

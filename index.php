@@ -40,23 +40,25 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frm_addstudent")) {
-    if($totalRows_student<=50){
-        $items = array(1, 2, 3, 4);
-        $h_id=$items[array_rand($items)];
-        $insertSQL = sprintf("INSERT INTO student (student_fullname, house_id) VALUES (%s,'$h_id')",
-                            GetSQLValueString($_POST['txt_fullname'], "text"));
 
-        mysql_select_db($database_harry, $harry);
-        $Result1 = mysql_query($insertSQL, $harry) or die(mysql_error());
 
-        $insertGoTo = "process.php";
-        if (isset($_SERVER['QUERY_STRING'])) {
-            $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-            $insertGoTo .= $_SERVER['QUERY_STRING'];
-        }
-        header(sprintf("Location: %s", $insertGoTo));
-}
+if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
+        if($totalRows_student<=50){
+            $items = array(1, 2, 3, 4);
+            $h_id=$items[array_rand($items)];
+            $insertSQL = sprintf("INSERT INTO student (student_fullname, house_id) VALUES (%s,'$h_id')",
+                                GetSQLValueString($_GET['txt_fullname'], "text"));
+
+            mysql_select_db($database_harry, $harry);
+            $Result1 = mysql_query($insertSQL, $harry) or die(mysql_error());
+
+            $insertGoTo = "process.php";
+            if (isset($_SERVER['QUERY_STRING'])) {
+                $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+                $insertGoTo .= $_SERVER['QUERY_STRING'];
+            }
+            header(sprintf("Location: %s", $insertGoTo));
+    }
 }
 
 
@@ -99,7 +101,7 @@ $totalRows_house = mysql_num_rows($house);
                     <!--
                 <img alt="Bootstrap Image Preview" src="img/banner2.png" class="rounded" />
 -->
-                    <form action="<?php echo $editFormAction; ?>" name="frm_addstudent" method="POST"
+                    <form action="<?php echo $editFormAction; ?>" name="frm_addstudent" method="get"
                         enctype="multipart/form-data" id="frm_addstudent" role="form">
                         <div class="form-group">
 
