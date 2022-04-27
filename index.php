@@ -60,8 +60,9 @@ $totalRows_house = mysql_num_rows($house);
 		<div class="col-md-12">
 			<div class="jumbotron">
 				<h2>
-					Hello, world!
+					ระบบคัดสรรนักเรียน 50 คน เข้าบ้าน 4 หลัง
 				</h2>
+                <img alt="Bootstrap Image Preview" src="img/banner2.png" class="rounded" />
 				<p>
 					This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
 				</p>

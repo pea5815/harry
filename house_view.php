@@ -77,8 +77,42 @@ $totalRows_house = mysql_num_rows($house);
 			<p>
 			<?php echo $row_house['house_detail']; ?>. </p>
 			<p>
-				<a class="btn" href="#">View details »</a>
+				<a class="btn" href="index.php">ย้อนกลับ »</a>
 			</p>
+            <table class="table table-hover table-sm table-bordered">
+				<thead>
+					<tr>
+						<th>
+							ลำดับที่ 1
+						</th>
+						<th>
+                            ชื่อ - นามสกุล
+						</th>
+						<th>
+							แก้ไข
+						</th>
+						<th>
+							ลบ
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							1
+						</td>
+						<td>
+							TB - Monthly
+						</td>
+						<td>
+							01/04/2012
+						</td>
+						<td>
+							Default
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
