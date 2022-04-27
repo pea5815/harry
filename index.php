@@ -67,7 +67,7 @@ $totalRows_house = mysql_num_rows($house);
                     <!--
                 <img alt="Bootstrap Image Preview" src="img/banner2.png" class="rounded" />
 -->
-                    <form role="form">
+                    <form method="post" enctype="multipart/form-data" id="frm_addstudent" role="form">
                         <div class="form-group">
 
                             <label for="exampleInputEmail1">
