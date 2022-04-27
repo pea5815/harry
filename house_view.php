@@ -106,7 +106,7 @@ $num=1;
 					    <td><?php echo $row_student['student_fullname']; ?></td>
 					    <td>แก้ไข</td>
 					    <td>
-					      ลบ</td>
+					      <a href="student_del.php?std_id=<?php echo $row_student['student_id']; ?>">ลบ</a></td>
 				      </tr>
 					  <?php } while ($row_student = mysql_fetch_assoc($student)); ?>
                 </tbody>
