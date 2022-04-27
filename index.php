@@ -30,7 +30,11 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
-
+mysql_select_db($database_harry, $harry);
+$query_student = "SELECT * FROM student";
+$student = mysql_query($query_student, $harry) or die(mysql_error());
+$row_student = mysql_fetch_assoc($student);
+$totalRows_student = mysql_num_rows($student);
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
@@ -38,26 +42,28 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frm_addstudent")) {
     
-    $items1 = array(1, 2, 3, 4);
-    $items2 = array(1, 2, 3, 4);
-    $items3 = array(1, 2, 3, 4);
-    $items4 = array(1, 2, 3, 4);
     
-    echo $items[array_rand($items)];
-    /*
-  $insertSQL = sprintf("INSERT INTO student (student_fullname) VALUES (%s)",
+    if($totalRows_student<=50){
+        $items = array(1, 2, 3, 4);
+        $h_id=$items[array_rand($items)];
+        $insertSQL = sprintf("INSERT INTO student (student_fullname, house_id) VALUES (%s,'$h_id')",
                        GetSQLValueString($_POST['txt_fullname'], "text"));
 
-  mysql_select_db($database_harry, $harry);
-  $Result1 = mysql_query($insertSQL, $harry) or die(mysql_error());
+        mysql_select_db($database_harry, $harry);
+        $Result1 = mysql_query($insertSQL, $harry) or die(mysql_error());
 
-  $insertGoTo = "index.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $insertGoTo));
-  */
+        $insertGoTo = "index.php";
+        if (isset($_SERVER['QUERY_STRING'])) {
+            $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+            $insertGoTo .= $_SERVER['QUERY_STRING'];
+        }
+        header(sprintf("Location: %s", $insertGoTo));
+    }else{
+
+    }
+    
+  
+  
 }
 
 mysql_select_db($database_harry, $harry);
@@ -65,6 +71,8 @@ $query_house = "SELECT * FROM house ORDER BY house_id ASC";
 $house = mysql_query($query_house, $harry) or die(mysql_error());
 $row_house = mysql_fetch_assoc($house);
 $totalRows_house = mysql_num_rows($house);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +109,7 @@ $totalRows_house = mysql_num_rows($house);
                         <div class="form-group">
 
                             <label for="exampleInputEmail1">
-                                ชื่อ - นามสกุล นักเรียน
+                                ชื่อ - นามสกุล นักเรียน (<?php echo $totalRows_student ?>)
                             </label>
                             <input type="text" class="form-control" id="exampleInputEmail1" name="txt_fullname"
                                 required />
@@ -137,4 +145,6 @@ $totalRows_house = mysql_num_rows($house);
 </html>
 <?php
 mysql_free_result($house);
+
+mysql_free_result($student);
 ?>

@@ -50,6 +50,7 @@ $query_house = sprintf("SELECT * FROM house WHERE house_id = %s", GetSQLValueStr
 $house = mysql_query($query_house, $harry) or die(mysql_error());
 $row_house = mysql_fetch_assoc($house);
 $totalRows_house = mysql_num_rows($house);
+$num=1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,21 +98,18 @@ $totalRows_house = mysql_num_rows($house);
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>
-							1
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							01/04/2012
-						</td>
-						<td>
-							Default
-						</td>
-					</tr>
-				</tbody>
+					<?php do { ?>
+				    <tr>
+					    <td>
+					      <?php echo $num++;?>
+					      </td>
+					    <td><?php echo $row_student['student_fullname']; ?></td>
+					    <td>แก้ไข</td>
+					    <td>
+					      ลบ</td>
+				      </tr>
+					  <?php } while ($row_student = mysql_fetch_assoc($student)); ?>
+                </tbody>
 			</table>
 		</div>
 	</div>
