@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <info>
 	<infoitem key="UD_house" value="name:house_id;datatype:int,name:house_name;datatype:string,name:house_detail;datatype:string" />
+	<infoitem key="UD_student" value="name:student_id;datatype:int,name:student_fullname;datatype:string,name:house_id;datatype:int" />
 </info>

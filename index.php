@@ -41,30 +41,25 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frm_addstudent")) {
-    
-    
     if($totalRows_student<=50){
         $items = array(1, 2, 3, 4);
         $h_id=$items[array_rand($items)];
         $insertSQL = sprintf("INSERT INTO student (student_fullname, house_id) VALUES (%s,'$h_id')",
-                       GetSQLValueString($_POST['txt_fullname'], "text"));
+                            GetSQLValueString($_POST['txt_fullname'], "text"));
 
         mysql_select_db($database_harry, $harry);
         $Result1 = mysql_query($insertSQL, $harry) or die(mysql_error());
 
-        $insertGoTo = "index.php";
+        $insertGoTo = "process.php";
         if (isset($_SERVER['QUERY_STRING'])) {
             $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
             $insertGoTo .= $_SERVER['QUERY_STRING'];
         }
         header(sprintf("Location: %s", $insertGoTo));
-    }else{
-
-    }
-    
-  
-  
 }
+}
+
+
 
 mysql_select_db($database_harry, $harry);
 $query_house = "SELECT * FROM house ORDER BY house_id ASC";
