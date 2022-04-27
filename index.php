@@ -56,11 +56,16 @@ if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
             
                 $items = array(1, 2, 3, 4);
                 $h_id=$items[array_rand($items)];
+                $i=0;
+                foreach( $items as $value ) {
+                    echo "Array Index [$i] : ".$value."<br/>";
+                    $i++;
+                }
             echo "สุ่มได้บ้าน = ".$h_id;
             echo "</br>";
             echo "min = ".$_SESSION["house_min"];
             
-            /*
+            
             $insertSQL = sprintf("INSERT INTO student (student_fullname, house_id) VALUES (%s,'$h_id')",
                                 GetSQLValueString($_GET['txt_fullname'], "text"));
 
@@ -73,7 +78,7 @@ if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
                 $insertGoTo .= $_SERVER['QUERY_STRING'];
             }
             header(sprintf("Location: %s", $insertGoTo));
-            */
+            
             
     }else{
         echo "จำนวนนักเรียน ครบ 50 คนแล้วจ้า";
@@ -171,24 +176,12 @@ if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
         </div>
         <div class="row">
             <div class="col-md-12">
-                <?php echo "house_session1 = ".$_SESSION["house_session1"];?>
-                </br>
-                <?php echo "house_session2 = ".$_SESSION["house_session2"];?>
-                </br>
-                <?php echo "house_session3 = ".$_SESSION["house_session3"];?>
-                </br>
-                <?php echo "house_session4 = ".$_SESSION["house_session4"];?>
-                </br>
 
                 <?php
                     $a = array($_SESSION["house_session1"], $_SESSION["house_session2"], $_SESSION["house_session3"], $_SESSION["house_session4"]);
-                    print_r( $a );
-                    echo "<br/>";
+                    //print_r( $a );
                     $_SESSION["house_max"]=max( $a );
-                    echo "ค่ามากที่สุดของ array คือ ".max( $a );
-                    echo "<br/>";
                     $_SESSION["house_min"]=min( $a );
-                    echo "ค่าน้อยที่สุดของ array คือ ".min( $a );
                 ?>
             </div>
         </div>
