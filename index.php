@@ -39,7 +39,8 @@ $totalRows_house = mysql_num_rows($house);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,45 +53,55 @@ $totalRows_house = mysql_num_rows($house);
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
-  </head>
-  <body>
+</head>
+
+<body>
 
     <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="jumbotron">
-				<h2>
-					ระบบคัดสรรนักเรียน 50 คน เข้าบ้าน 4 หลัง
-				</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h2>
+                        ระบบคัดสรรนักเรียน 50 คน เข้าบ้าน 4 หลัง
+                    </h2>
+                    <!--
                 <img alt="Bootstrap Image Preview" src="img/banner2.png" class="rounded" />
-				<p>
-					This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
-				</p>
-				<p>
-					<a class="btn btn-primary btn-large" href="#">Learn more</a>
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-        <?php do { ?>
-        <div class="col-md-3">
-            <h2>
-              <?php echo $row_house['house_name']; ?> </h2>
-            <p>
-              <?php echo $row_house['house_detail']; ?></p>
-            <p>
-              <a class="btn" href="house_view.php?houseid=<?php echo $row_house['house_id'];?>">View details »</a>
-              </p>
-          </div>
-          <?php } while ($row_house = mysql_fetch_assoc($house)); ?>
-	</div>
-</div>
+-->
+                    <form role="form">
+                        <div class="form-group">
+
+                            <label for="exampleInputEmail1">
+                                ชื่อ - นามสกุล นักเรียน
+                            </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="txt_fullname" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            เพิ่มนักเรียน
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <?php do { ?>
+            <div class="col-md-3">
+                <h2>
+                    <?php echo $row_house['house_name']; ?> </h2>
+                <p>
+                    <?php echo $row_house['house_detail']; ?></p>
+                <p>
+                    <a class="btn" href="house_view.php?houseid=<?php echo $row_house['house_id'];?>">View details »</a>
+                </p>
+            </div>
+            <?php } while ($row_house = mysql_fetch_assoc($house)); ?>
+        </div>
+    </div>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
-  </body>
+</body>
+
 </html>
 <?php
 mysql_free_result($house);
