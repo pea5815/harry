@@ -37,6 +37,14 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frm_addstudent")) {
+    
+    $items1 = array(1, 2, 3, 4);
+    $items2 = array(1, 2, 3, 4);
+    $items3 = array(1, 2, 3, 4);
+    $items4 = array(1, 2, 3, 4);
+    
+    echo $items[array_rand($items)];
+    /*
   $insertSQL = sprintf("INSERT INTO student (student_fullname) VALUES (%s)",
                        GetSQLValueString($_POST['txt_fullname'], "text"));
 
@@ -49,6 +57,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frm_addstudent")) {
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $insertGoTo));
+  */
 }
 
 mysql_select_db($database_harry, $harry);
@@ -87,13 +96,15 @@ $totalRows_house = mysql_num_rows($house);
                     <!--
                 <img alt="Bootstrap Image Preview" src="img/banner2.png" class="rounded" />
 -->
-                    <form action="<?php echo $editFormAction; ?>" name="frm_addstudent" method="POST" enctype="multipart/form-data" id="frm_addstudent" role="form">
+                    <form action="<?php echo $editFormAction; ?>" name="frm_addstudent" method="POST"
+                        enctype="multipart/form-data" id="frm_addstudent" role="form">
                         <div class="form-group">
 
                             <label for="exampleInputEmail1">
                                 ชื่อ - นามสกุล นักเรียน
                             </label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="txt_fullname" required />
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="txt_fullname"
+                                required />
                         </div>
                         <button type="submit" class="btn btn-primary">
                             เพิ่มนักเรียน
