@@ -38,35 +38,48 @@ $query_student = "SELECT * FROM student";
 $student = mysql_query($query_student, $harry) or die(mysql_error());
 $row_student = mysql_fetch_assoc($student);
 $totalRows_student = mysql_num_rows($student);
+
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-
+mysql_select_db($database_harry, $harry);
+$query_house = "SELECT * FROM house ORDER BY house_id ASC";
+$house = mysql_query($query_house, $harry) or die(mysql_error());
+$row_house = mysql_fetch_assoc($house);
+$totalRows_house = mysql_num_rows($house);
 
 if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
-        if($totalRows_student<=50){
-            if($_SESSION["house_max"]>$_SESSION["house_session1"]){
-                echo"ไม่นับสุ่มเข้า1";
+    
+        if($totalRows_student<50){
+            if($_SESSION["house_max"]==$_SESSION["house_session1"]){
+                echo"ไม่นับสุ่มเข้าบ้าน 1";
                 $items = array(2, 3, 4);
                 $h_id=$items[array_rand($items)];
             }
-            if($_SESSION["house_max"]>$_SESSION["house_session2"]){
-                echo"ไม่นับสุ่มเข้า2";
+            if($_SESSION["house_max"]==$_SESSION["house_session2"]){
+                echo"ไม่นับสุ่มเข้าบ้าน 2";
                 $items = array(1, 3, 4);
                 $h_id=$items[array_rand($items)];
             }
-            if($_SESSION["house_max"]>$_SESSION["house_session3"]){
-                echo"ไม่นับสุ่มเข้า3";
+            if($_SESSION["house_max"]==$_SESSION["house_session3"]){
+                echo"ไม่นับสุ่มเข้าบ้าน 3";
                 $items = array(1, 2, 4);
                 $h_id=$items[array_rand($items)];
             }
-            if($_SESSION["house_max"]>$_SESSION["house_session4"]){
-                echo"ไม่นับสุ่มเข้า4";
+            if($_SESSION["house_max"]==$_SESSION["house_session4"]){
+                echo"ไม่นับสุ่มเข้าบ้าน 4";
                 $items = array(1, 2, 3);
                 $h_id=$items[array_rand($items)];
             }
+            if($_SESSION["house_max"]==0){
+                $items = array(1, 2, 3, 4);
+                $h_id=$items[array_rand($items)];
+            }
+            echo "hid = ".$h_id;
+            //echo "max = ".$_SESSION["house_max"];
+            
             
             $insertSQL = sprintf("INSERT INTO student (student_fullname, house_id) VALUES (%s,'$h_id')",
                                 GetSQLValueString($_GET['txt_fullname'], "text"));
@@ -81,16 +94,16 @@ if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
             }
             header(sprintf("Location: %s", $insertGoTo));
             
+            
+    }else{
+        echo "จำนวนนักเรียน ครบ 50 คนแล้วจ้า";
     }
+    
 }
 
 
 
-mysql_select_db($database_harry, $harry);
-$query_house = "SELECT * FROM house ORDER BY house_id ASC";
-$house = mysql_query($query_house, $harry) or die(mysql_error());
-$row_house = mysql_fetch_assoc($house);
-$totalRows_house = mysql_num_rows($house);
+
 
 
 ?>
