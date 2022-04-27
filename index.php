@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <?php require_once('Connections/harry.php'); ?>
 <?php
 if (!function_exists("GetSQLValueString")) {
@@ -44,8 +47,27 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
         if($totalRows_student<=50){
-            $items = array(1, 2, 3, 4);
-            $h_id=$items[array_rand($items)];
+            if($_SESSION["house_max"]>$_SESSION["house_session1"]){
+                echo"ไม่นับสุ่มเข้า1";
+                $items = array(2, 3, 4);
+                $h_id=$items[array_rand($items)];
+            }
+            if($_SESSION["house_max"]>$_SESSION["house_session2"]){
+                echo"ไม่นับสุ่มเข้า2";
+                $items = array(1, 3, 4);
+                $h_id=$items[array_rand($items)];
+            }
+            if($_SESSION["house_max"]>$_SESSION["house_session3"]){
+                echo"ไม่นับสุ่มเข้า3";
+                $items = array(1, 2, 4);
+                $h_id=$items[array_rand($items)];
+            }
+            if($_SESSION["house_max"]>$_SESSION["house_session4"]){
+                echo"ไม่นับสุ่มเข้า4";
+                $items = array(1, 2, 3);
+                $h_id=$items[array_rand($items)];
+            }
+            
             $insertSQL = sprintf("INSERT INTO student (student_fullname, house_id) VALUES (%s,'$h_id')",
                                 GetSQLValueString($_GET['txt_fullname'], "text"));
 
@@ -58,6 +80,7 @@ if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "frm_addstudent")) {
                 $insertGoTo .= $_SERVER['QUERY_STRING'];
             }
             header(sprintf("Location: %s", $insertGoTo));
+            
     }
 }
 
@@ -123,7 +146,28 @@ $totalRows_house = mysql_num_rows($house);
             <?php do { ?>
             <div class="col-md-3">
                 <h2>
-                    <?php echo $row_house['house_name']; ?> </h2>
+                    <?php 
+                    echo $row_house['house_name']; 
+                    $hid1 = $row_house['house_id'];
+                    $sql = "SELECT * FROM student where house_id='$hid1'";
+                    $row = mysql_query($sql);
+                    $nrow = mysql_num_rows($row);
+                    echo $nrow;
+                    if($hid1=="1"){
+                        $_SESSION["house_session1"]=$nrow;
+                    }
+                    if($hid1=="2"){
+                        $_SESSION["house_session2"]=$nrow;
+                    }
+                    if($hid1=="3"){
+                        $_SESSION["house_session3"]=$nrow;
+                    }
+                    if($hid1=="4"){
+                        $_SESSION["house_session4"]=$nrow;
+                    }
+                    ?>
+
+                </h2>
                 <p>
                     <?php echo $row_house['house_detail']; ?></p>
                 <p>
@@ -131,6 +175,29 @@ $totalRows_house = mysql_num_rows($house);
                 </p>
             </div>
             <?php } while ($row_house = mysql_fetch_assoc($house)); ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo "house_session1 = ".$_SESSION["house_session1"];?>
+                </br>
+                <?php echo "house_session2 = ".$_SESSION["house_session2"];?>
+                </br>
+                <?php echo "house_session3 = ".$_SESSION["house_session3"];?>
+                </br>
+                <?php echo "house_session4 = ".$_SESSION["house_session4"];?>
+                </br>
+                
+                <?php
+                    $a = array($_SESSION["house_session1"], $_SESSION["house_session2"], $_SESSION["house_session3"], $_SESSION["house_session4"]);
+                    print_r( $a );
+                    echo "<br/>";
+                    $_SESSION["house_max"]=max( $a );
+                    echo "ค่ามากที่สุดของ array คือ ".max( $a );
+                    echo "<br/>";
+                    $_SESSION["house_min"]=min( $a );
+                    echo "ค่าน้อยที่สุดของ array คือ ".min( $a );
+                ?>
+            </div>
         </div>
     </div>
 

@@ -80,16 +80,18 @@ $totalRows_house = mysql_num_rows($house);
                 <div class="jumbotron">
                     <h2>
                         Hello, <?php echo $row_student['student_fullname']; ?> </h2>
-                    <p>ยินดีด้วย คุณถูกเลือกให้อยู่ในบ้าน 
+                    <p>ยินดีด้วย คุณถูกเลือกให้อยู่ในบ้าน
                         <?php 
                         $_SESSION["hid"] =$row_student['house_id']; 
+                        
                         //echo $_SESSION['hid'];
                         ?>.
 
-                    
-                    <?php echo $row_house['house_name']; ?></p>
+
+                        <?php echo $row_house['house_name']; ?></p>
                     <form name="form1" method="post" action="">
-                      <input name="hiddenField" type="hidden" id="hiddenField" value="<?php echo $row_student['house_id']; ?>">
+                        <input name="hiddenField" type="hidden" id="hiddenField"
+                            value="<?php echo $row_student['house_id']; ?>">
                     </form>
                     <p>
                         <a class="btn btn-primary btn-large" href="index.php">หน้าหลัก</a>
